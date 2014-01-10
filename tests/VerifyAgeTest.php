@@ -71,21 +71,24 @@ EOD;
   public function testHead() {
     $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/', new VerifyAge\Storage());
     $age->setConfig('document_root', '../');
+    $age->setConfig('width', 200);
+    $age->setConfig('height', 200);
+    $age->setConfig('overlay', '#000');
 
     $control = array(
       '<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>',
       '<script src="/verify_age/scripts/verify_age.min.js"></script>',
-      '<style type="text/css" media="all">@import url("/verify_age/stylesheets/verify_age.css");</style>',
+      '<style type="text/css" media="all">@import url("/verify_age/stylesheets/verify_age.css");.verify-age.background{background:#000;}.verify-age.popup{width:200px;height:200px;margin-top:-100px;margin-left:-100px;}</style>',
     );
     $this->assertEquals(implode(PHP_EOL, $control) . PHP_EOL, $age->getHead());
 
-    $control[2] = '<style type="text/css" media="all">@import url("/age-check-styles.css");</style>';
-    $age->setConfig('css', '/age-check-styles.css');
-    $this->assertEquals(implode(PHP_EOL, $control) . PHP_EOL, $age->getHead());
+    // $control[2] = '<style type="text/css" media="all">@import url("/age-check-styles.css");</style>';
+    // $age->setConfig('css', '/age-check-styles.css');
+    // $this->assertEquals(implode(PHP_EOL, $control) . PHP_EOL, $age->getHead());
 
     $age->setConfig('jquery_cdn', FALSE);
-    $age->setConfig('css', '');
-    $this->assertEquals($control[1] . PHP_EOL, $age->getHead());
+    unset($control[0]);
+    $this->assertEquals(implode(PHP_EOL, $control) . PHP_EOL, $age->getHead());
   }
 
   public function testConfig() {
@@ -96,10 +99,9 @@ EOD;
     $this->assertNotEmpty($config['snippet_enter']);
     $this->assertNotEmpty($config['snippet_exit']);
     $this->assertNotEmpty($config['url_403']);
-    $this->assertNotEmpty($config['css']);
     $this->assertNotEmpty($config['width']);
     $this->assertNotEmpty($config['height']);
-    $this->assertNotEmpty($config['background']);
+    $this->assertNotEmpty($config['overlay']);
 
     $this->assertTrue($age->getConfig('jquery_cdn'));
     $age->setConfig('jquery_cdn', FALSE);
