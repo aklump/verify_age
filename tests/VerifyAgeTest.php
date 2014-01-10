@@ -32,7 +32,7 @@ class VerifyAgeTest extends PHPUnit_Framework_TestCase {
       $parts = parse_url($url);
       $this->assertEquals('/verify_age/verify.php', $parts['path']);
       parse_str($parts['query'], $query);
-      $this->assertEquals(1, $query['s']);
+      $this->assertEquals(1, $query['o']);
     }
 
     // unVerify url
@@ -40,7 +40,7 @@ class VerifyAgeTest extends PHPUnit_Framework_TestCase {
     $parts = parse_url($url);
     $this->assertEquals('/verify_age/verify.php', $parts['path']);
     parse_str($parts['query'], $query);
-    $this->assertEquals(2, $query['s']);
+    $this->assertEquals(2, $query['o']);
 
     // Body text popup when not verified
     $control = <<<EOD
@@ -49,8 +49,8 @@ class VerifyAgeTest extends PHPUnit_Framework_TestCase {
     <div class="verify-age-inner">
       <h1>Are you over 21?</h1>
       <p>
-        <a class="verify-age-exit" href="/verify_age/verify.php?s=2&r=/" rel="nofollow">No - Leave</a>
-        <a class="verify-age-enter" href="/verify_age/verify.php?s=1&r=/" rel="nofollow">Yes - Enter</a>
+        <a class="verify-age-exit" href="/verify_age/verify.php?o=2" rel="nofollow">No - Leave</a>
+        <a class="verify-age-enter" href="/verify_age/verify.php?o=1&r=/" rel="nofollow">Yes - Enter</a>
       </p>
     </div>
   </div>
@@ -65,7 +65,7 @@ EOD;
     // Body exit text when verified
     $control = <<<EOD
 <div class="verify-age verified">
-  <p><a class="verify-age-exit" href="/verify_age/verify.php?s=2&r=/" rel="nofollow">I'm not 21, get me out of here.</a></p>
+  <p><a class="verify-age-exit" href="/verify_age/verify.php?o=2" rel="nofollow">I'm not 21, get me out of here.</a></p>
 </div>
 
 EOD;

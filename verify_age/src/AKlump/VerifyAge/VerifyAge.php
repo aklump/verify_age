@@ -52,10 +52,10 @@ class VerifyAge {
 
     switch ($type) {
       case 'verify':
-        return "{$base_path}verify.php?s=1&r=$return";
+        return "{$base_path}verify.php?o=1&r=$return";
       
       case 'deny':
-        return "{$base_path}verify.php?s=2&r=$return";
+        return "{$base_path}verify.php?o=2";
     }
   }
 
