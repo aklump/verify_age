@@ -46,10 +46,10 @@ On every html page for which you require age verification you will need to add t
 
     <?php
     require_once('verify_age/vendor/autoload.php');
-    $age = new AKlump\VerifyAge\VerifyAge('/verify_age/user/config.yaml');
+    $age = new AKlump\VerifyAge\VerifyAge('verify_age/user/config.yaml');
     ?>
 
-1. If your config file is found elsewhere, you may change argument one above.
+1. Make sure the `require_once` and `VerifyAge` arguments point to the paths relative to the control file.
     
 ## Inside the `<head/>`
 Make sure to place this before and css that may override this output.  Also if you've turned off the `jquery_cdn` option this needs to come AFTER your jquery script include.
