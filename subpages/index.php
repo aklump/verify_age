@@ -1,6 +1,6 @@
 <?php
 require_once('../verify_age/vendor/autoload.php');
-$age = new AKlump\VerifyAge\VerifyAge('../verify_age/user/config.yaml', __FILE__);
+$age = new AKlump\VerifyAge\VerifyAge(__FILE__, '../verify_age/config_default.yaml');
 ?>
 <!DOCTYPE html>
 <html>

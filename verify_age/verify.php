@@ -7,46 +7,58 @@
  * @{
  */
 require_once('vendor/autoload.php');
-$age = new AKlump\VerifyAge\VerifyAge('user/config.yaml', __FILE__);
+$age      = new AKlump\VerifyAge\VerifyAge(__FILE__);
 $config   = $age->getConfig();
-$redirect = isset($_REQUEST['r']) ? $_REQUEST['r'] : '/';
-$json = !isset($_REQUEST['r']);
+$redirect = isset($_REQUEST['r']) ? $_REQUEST['r'] : FALSE;
+$json     = isset($_REQUEST['s']) && !$redirect;
+$op       = isset($_REQUEST['s']) ? $_REQUEST['s'] * 1 : NULL;
+$response = array();
 
-if (!isset($_REQUEST['s'])) {
-  $redirect = $age->getConfig('url_403');
-}
-else {
-  switch ($_REQUEST['s'] * 1) {
+if ($op) {
+  switch ($op) {
     case 1:
       $age->verify();
       break;
-    
-    default:
+
+    case 2:
       $age->deny();
-      $redirect = $age->getConfig('url_403');
+      break;
+
+    case 3:
+      $response['mode'] = 'inquiry';
+      $json = TRUE;
       break;
   }
 }
 
-// Redirect for non-js browsers
-if (!$json) {
-  header('Location:' . (string) $redirect);
-}
+// https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag
+header('X-Robots-Tag: noindex');
 
-// Print out JSON
-else {
+// Redirect for non-js browsers
+if ($json) {
   header('Content-Type: application/json');
-  $response = $age->getStatus();
+  $response += (array) $age->getStatus();
   
   // If we send any value for $response->redirect the ajax will
   // redirect the user; we only do that for failures at this time
   if ($age->isVerified()) {
-    $response->replaceWith = $age->getBody('verified');
+    $response['replaceWith'] = $age->getBody('verified');
   }
   else {
-    $response->redirect = $redirect;
+    $response['redirect'] = $redirect;
   }
-  print json_encode($response);
+  print json_encode((object)$response);
+}
+
+// Redirection
+elseif ($redirect) {
+  header('Location:' . (string) $redirect);
+}
+
+// Not found
+else {
+  header('HTTP/1.0 403 Not Found');
+  print $age->getBody('403');
 }
 
 exit();
