@@ -1,5 +1,5 @@
 /*!
- * Verify Age jQuery JavaScript Plugin v0.1
+ * Verify Age jQuery JavaScript Plugin v0.1.2
  * http://www.intheloftstudios.com/packages/php/verify_age
  *
  * A PHP/Javascript solution for SEO/Google-friendly website age-verification.
@@ -7,18 +7,17 @@
  * Copyright 2013, Aaron Klump
  * Dual licensed under the MIT or GPL Version 2 licenses.
  *
- * Date: Thu, 09 Jan 2014 18:32:26 -0800
+ * Date: Fri, 10 Jan 2014 10:58:08 -0800
  */
 ;(function($, undefined) {
 "use strict";
 
 $.fn.verifyAge = function() {
 
-  var $popup      = $(this);
-  var $background = $(this).siblings('.verify-age.background');
+  var $background = $(this);
 
   // Do nothing when nothing selected
-  if ($popup.length === 0) {
+  if ($background.length === 0) {
     return;
   }
 
@@ -31,8 +30,7 @@ $.fn.verifyAge = function() {
     // make the ajax call and process return
     $.getJSON(href, function (data) {
       if (data.replaceWith) {
-        $background.remove();
-        $popup.replaceWith(data.replaceWith);
+        $background.replaceWith(data.replaceWith);
       }
       if (data.redirect) {
         window.location = data.redirect;
@@ -40,9 +38,9 @@ $.fn.verifyAge = function() {
     });
   }
 
-  $popup.not('.verify-age-processed')
+  $background.not('.verify-age-processed')
   .addClass('verify-age-processed')
-  .find('a.verify-age')
+  .find('a.verify-age-enter, a.verify-age-exit')
   .click(function () {
     handleClick($(this));
 
@@ -52,12 +50,12 @@ $.fn.verifyAge = function() {
   return this;
 };
 
-$.fn.verifyAge.version = function() { return '0.1'; };
+$.fn.verifyAge.version = function() { return '0.1.2'; };
 
 })(jQuery);
 
 (function($) {
   $('document').ready(function(){
-    $('.verify-age.popup').verifyAge();
+    $('.verify-age').verifyAge();
   });
 })(jQuery);

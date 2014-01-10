@@ -9,9 +9,10 @@
 # The path from document root to the root of verify_age/
 base_path: '/verify_age/'
 
-# Enter the relative url the page to display when they have have not met the
-# age requirements.
+# Enter the url (relative if within your site, or absolute if to another 
+# external website) to display when they have have not met the age requirements.
 url_403: /underage.html
+#url_403: http://www.youtube.com/watch?v=gppbrYIcR80
 
 # Snippets will be parsed for the following variables:
 #   {{ deny.href }}
@@ -20,7 +21,7 @@ url_403: /underage.html
 #   
 # The contents of this file will show when a user is unverified.  
 # This is the default file and should not be modified
-snippet_enter: /verify_age/over-21.html.twig
+snippet_enter: /verify_age/yes-no.html.twig
 # If you want to modify the file use this
 #snippet_enter: /verify_age/user/over-21.html.twig
 
@@ -30,9 +31,16 @@ snippet_enter: /verify_age/over-21.html.twig
 snippet_exit:  /verify_age/exit.html.twig
 #snippet_exit:  /verify_age/user/exit.html.twig
 
+# This snippet will be presented when a user hits the validate.php page without
+# proper input variables
+snippet_403: /verify_age/403.html.twig
+
+# Enter the minimum age necessary to enter
+min_age: 21
+
 # width/height in pixels of the popup container, e.g., 400
-width: 400
-height: 400
+width: 500
+height: 300
 
 # Background color of the overlay
 overlay: '#000'

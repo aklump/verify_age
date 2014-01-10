@@ -13,13 +13,13 @@ require_once '../verify_age/vendor/autoload.php';
 class VerifyAgeTest extends PHPUnit_Framework_TestCase {
 
   public function test403() {
-    $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/', new VerifyAge\Storage());
+    $age = new VerifyAge\VerifyAge('/', '../verify_age/config_default.yaml', new VerifyAge\Storage());
     $age->setConfig('document_root', '../');
     $this->assertSame('/underage.html', $age->getConfig('url_403'));
   }
 
   public function testBody() {
-    $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/', new VerifyAge\Storage());
+    $age = new VerifyAge\VerifyAge('/', '../verify_age/config_default.yaml', new VerifyAge\Storage());
     $age->setConfig('document_root', '../');
     $age->setConfig('url_403', '/underage.html');
 
@@ -44,11 +44,16 @@ class VerifyAgeTest extends PHPUnit_Framework_TestCase {
 
     // Body text popup when not verified
     $control = <<<EOD
-<div class="verify-age background"></div>
-<div class="verify-age popup">
-  <h1>Are you over 21?</h1>
-  <p><a class="verify-age no" href="/verify_age/verify.php?s=2&r=/">No</a></p>
-  <p><a class="verify-age yes" href="/verify_age/verify.php?s=1&r=/">Yes</a></p>
+<div class="verify-age unverified verify-age-background">
+  <div class="verify-age-dialog">
+    <div class="verify-age-inner">
+      <h1>Are you over 21?</h1>
+      <p>
+        <a class="verify-age-exit" href="/verify_age/verify.php?s=2&r=/" rel="nofollow">No - Leave</a>
+        <a class="verify-age-enter" href="/verify_age/verify.php?s=1&r=/" rel="nofollow">Yes - Enter</a>
+      </p>
+    </div>
+  </div>
 </div>
 
 EOD;
@@ -59,7 +64,9 @@ EOD;
 
     // Body exit text when verified
     $control = <<<EOD
-<p><a class="verify-age no" href="/verify_age/verify.php?s=2&r=/">I am not 21, get me out of here.</a></p>
+<div class="verify-age verified">
+  <p><a class="verify-age-exit" href="/verify_age/verify.php?s=2&r=/" rel="nofollow">I'm not 21, get me out of here.</a></p>
+</div>
 
 EOD;
     $this->assertEquals($control, $age->getBody());
@@ -69,7 +76,7 @@ EOD;
   }
 
   public function testHead() {
-    $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/', new VerifyAge\Storage());
+    $age = new VerifyAge\VerifyAge('/', '../verify_age/config_default.yaml', new VerifyAge\Storage());
     $age->setConfig('document_root', '../');
     $age->setConfig('width', 200);
     $age->setConfig('height', 200);
@@ -78,7 +85,7 @@ EOD;
     $control = array(
       '<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>',
       '<script src="/verify_age/scripts/verify_age.min.js"></script>',
-      '<style type="text/css" media="all">@import url("/verify_age/stylesheets/verify_age.css");.verify-age.background{background:#000;}.verify-age.popup{width:200px;height:200px;margin-top:-100px;margin-left:-100px;}</style>',
+      '<style type="text/css" media="all">@import url("/verify_age/stylesheets/verify_age.css");.verify-age-background{background-color:#000;}.verify-age-dialog{width:200px;height:200px;margin-top:-100px;margin-left:-100px;}</style>',
     );
     $this->assertEquals(implode(PHP_EOL, $control) . PHP_EOL, $age->getHead());
 
@@ -92,7 +99,7 @@ EOD;
   }
 
   public function testConfig() {
-    $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/', new VerifyAge\Storage());
+    $age = new VerifyAge\VerifyAge('/', '../verify_age/config_default.yaml', new VerifyAge\Storage());
     $age->setConfig('document_root', '../');
 
     $config = $age->getConfig();
@@ -109,7 +116,7 @@ EOD;
   }
   
   public function testVerify() {
-    $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/', new VerifyAge\Storage());
+    $age = new VerifyAge\VerifyAge('/', '../verify_age/config_default.yaml', new VerifyAge\Storage());
     $age->setConfig('document_root', '../');
 
     $status = $age->getStatus();

@@ -11,24 +11,30 @@ class VerifyAge {
   /**
    * Constructor
    *
-   * @param string $config_file The relative path to the config file, from the
-   *   the file in which this is being called. See $file.
-   * @param string $file        The path of the controller file.  Generally you
+   * @param string $file                  The path of the controller file.  Generally you
    *   may call this with __FILE__ as the argument and all will be well.
-   * @param StorageInterface $session     The session handling object.
+   * @param string $config_file           (Optional.) The relative path to the config file, from the
+   *   the file in which this is being called. See $file.  If NULL we'll call
+   *   $this->storage->get('config_file').
+   * @param StorageInterface $session     (Optional.) The session handling object.
    */
-  public function __construct($config_file = NULL, $file, StorageInterface $storage = NULL) {
-    $this->controlling_file = $file;
-    $this->config_file = $config_file;
-    $this->config = array();
-    $this->getConfig();
-
+  public function __construct($file, $config_file = NULL, StorageInterface $storage = NULL) {
     // Start the session if not already running
     if ($storage === NULL) {
       $storage = new Session();
     }
     $this->storage = $storage;
     $this->storage->init();
+
+    $this->controlling_file = $file;
+    
+    // Set or remember the last config file
+    $this->config_file = $config_file === NULL ? $this->storage->get('config_file') : $config_file;
+    $this->config_file = realpath($this->config_file);
+    $this->storage->set('config_file', $this->config_file);
+
+    $this->config = array();
+    $this->getConfig();
   }
 
   public function verify() {
@@ -85,9 +91,8 @@ class VerifyAge {
 
   public function getConfig($key = NULL) {
     if (empty($this->config) && $this->config_file) {
-      $yaml = file_get_contents(trim($this->config_file, '/'));
+      $yaml = file_get_contents($this->config_file);
       $this->config = yaml::parse($yaml);
-      //$this->config['config_file'] = $this->config_file;
 
       // This is the file path to the webroot of the website this is
       // installed in.
@@ -135,7 +140,7 @@ class VerifyAge {
     $overlay = $this->getConfig('overlay');
 
     $head[] = <<<EOD
-<style type="text/css" media="all">@import url("{$base_path}stylesheets/verify_age.css");.verify-age.background{background:{$overlay};}.verify-age.popup{width:{$width}px;height:{$width}px;margin-top:-{$half_height}px;margin-left:-{$half_width}px;}</style>
+<style type="text/css" media="all">@import url("{$base_path}stylesheets/verify_age.css");.verify-age-background{background-color:{$overlay};}.verify-age-dialog{width:{$width}px;height:{$height}px;margin-top:-{$half_height}px;margin-left:-{$half_width}px;}</style>
 EOD;
 
     return implode(PHP_EOL, $head) . PHP_EOL;
@@ -183,8 +188,13 @@ EOD;
     
     if ($body) {
       // twig style replacements of urls
-      foreach (array('deny', 'verify') as $token) {
-        $body = preg_replace('/{{ ' . (preg_quote($token . '.href')) . ' }}/', $this->getUrl($token), $body);
+      $tokens = array(
+        'deny.href' => $this->getUrl('deny'),
+        'verify.href' => $this->getUrl('verify'),
+        'min_age' => $this->getConfig('min_age'), 
+      );
+      foreach ($tokens as $token => $value) {
+        $body = preg_replace('/{{ ' . (preg_quote($token)) . ' }}/', $value, $body);
       }    
     }
 
