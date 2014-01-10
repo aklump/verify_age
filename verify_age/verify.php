@@ -7,7 +7,7 @@
  * @{
  */
 require_once('vendor/autoload.php');
-$age      = new AKlump\VerifyAge\VerifyAge(__FILE__);
+$age      = new AKlump\VerifyAge\VerifyAge();
 $config   = $age->getConfig();
 $redirect = isset($_REQUEST['r']) ? $_REQUEST['r'] : FALSE;
 $json     = (bool) !empty($_REQUEST['ajax']);
