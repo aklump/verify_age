@@ -136,7 +136,7 @@ class VerifyAge {
     if ($this->getConfig('jquery_cdn')) {
       $head[] = '<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>';
     }
-    $head[] = '<script type="text/javascript" src="' . $base_path . 'scripts/verify_age.min.js"></script>';
+    $head[] = '<script type="text/javascript" src="' . $base_path . 'js/verify_age.min.js"></script>';
 
     
     // Generate dynamic CSS
@@ -149,7 +149,7 @@ class VerifyAge {
     $overlay = $this->getConfig('overlay');
 
     $head[] = <<<EOD
-<style type="text/css" media="all">@import url("{$base_path}stylesheets/verify_age.css");.verify-age-background{background-color:{$overlay};}.verify-age-dialog{width:{$width}px;height:{$height}px;margin-top:-{$half_height}px;margin-left:-{$half_width}px;}</style>
+<style type="text/css" media="all">@import url("{$base_path}css/verify_age.css");.verify-age-background{background-color:{$overlay};}.verify-age-dialog{width:{$width}px;height:{$height}px;margin-top:-{$half_height}px;margin-left:-{$half_width}px;}</style>
 EOD;
 
     return implode(PHP_EOL, $head) . PHP_EOL;

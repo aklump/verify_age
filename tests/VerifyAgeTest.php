@@ -63,6 +63,7 @@ class VerifyAgeTest extends PHPUnit_Framework_TestCase {
         <a class="verify-age-exit" href="/verify_age/verify.php?o=2" rel="nofollow">No - Leave</a>
         <a class="verify-age-enter" href="/verify_age/verify.php?o=1&amp;r=/" rel="nofollow">Yes - Enter</a>
       </p>
+      <div class="verify-age-ajaxing">One moment...</div>
     </div>
   </div>
 </div>
@@ -95,8 +96,8 @@ EOD;
 
     $control = array(
       '<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>',
-      '<script type="text/javascript" src="/verify_age/scripts/verify_age.min.js"></script>',
-      '<style type="text/css" media="all">@import url("/verify_age/stylesheets/verify_age.css");.verify-age-background{background-color:#000;}.verify-age-dialog{width:200px;height:200px;margin-top:-100px;margin-left:-100px;}</style>',
+      '<script type="text/javascript" src="/verify_age/js/verify_age.min.js"></script>',
+      '<style type="text/css" media="all">@import url("/verify_age/css/verify_age.css");.verify-age-background{background-color:#000;}.verify-age-dialog{width:200px;height:200px;margin-top:-100px;margin-left:-100px;}</style>',
     );
     $this->assertEquals(implode(PHP_EOL, $control) . PHP_EOL, $age->getHead());
 
