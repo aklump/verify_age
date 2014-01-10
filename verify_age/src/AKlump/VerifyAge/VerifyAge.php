@@ -6,27 +6,32 @@ use \Symfony\Component\Yaml\Yaml;
  * Represents an age verification solution.
  */
 class VerifyAge {
-  protected $controlling_file, $config_dir, $config_file, $config, $storage;
+  protected $return_path, $config_dir, $config_file, $config, $storage;
 
   /**
    * Constructor
    *
-   * @param string $file                  The path of the controller file.  Generally you
-   *   may call this with __FILE__ as the argument and all will be well.
-   * @param string $config_file           (Optional.) The relative path to the config file, from the
+   * @param string $config_file
+   *   (Optional, if previously set.) The relative path to the config file, from the
    *   the file in which this is being called. See $file.  If NULL we'll call
    *   $this->storage->get('config_file').
-   * @param StorageInterface $session     (Optional.) The session handling object.
+   * @param string $return_url
+   *   (Optional.)The URL of the current page.  You may omit this
+   *   and $_SERVER['REQUEST_URI'] will be used; if you have problems then
+   *   use __FILE__ in the constructor like this: new VerifyAge(__FILE__, ...);
+   *   The browser will redirect to this path on certain processes.
+   * @param StorageInterface $session
+   *   (Optional.) The session handling object.
    */
-  public function __construct($file, $config_file = NULL, StorageInterface $storage = NULL) {
+  public function __construct($config_file = NULL, $return_path = NULL, StorageInterface $storage = NULL) {
     // Start the session if not already running
     if ($storage === NULL) {
       $storage = new Session();
     }
     $this->storage = $storage;
     $this->storage->init();
-
-    $this->controlling_file = $file;
+    
+    $this->return_path = $return_path;
     
     // Set or remember the last config file
     $this->config_file = $config_file === NULL ? $this->storage->get('config_file') : $config_file;
@@ -104,13 +109,17 @@ class VerifyAge {
       // urls to files such as verify.php      
       if (empty($this->config['base_path'])) {
         $this->config['base_path'] = '/verify_age/';
-        // $path = dirname($this->controlling_file) . '/' . dirname($this->config_file);
-        // $path = realpath($path);
-        // $path = str_replace(rtrim($this->config['document_root'], '/'), '', $path);
-        // $this->config['base_path'] = rtrim($path, '/') . '/';
       }
 
-      $return = str_replace(rtrim($this->config['document_root'], '/'), '', $this->controlling_file);
+      // Determine the return path
+      if ($this->return_path === NULL && isset($_SERVER['REQUEST_URI'])) {
+        $return = $_SERVER['REQUEST_URI'];
+      }
+      else {
+        // This handles when __FILE__ is used to remove doc root
+        $return = str_replace(rtrim($this->config['document_root'], '/'), '', $this->return_path);
+      }
+
       $this->config['return_path'] = $return;
     }
 

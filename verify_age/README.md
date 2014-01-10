@@ -46,7 +46,7 @@ On every html page for which you require age verification you will need to add t
 
     <?php
     require_once('verify_age/vendor/autoload.php');
-    $age = new AKlump\VerifyAge\VerifyAge(__FILE__, '/verify_age/user/config.yaml');
+    $age = new AKlump\VerifyAge\VerifyAge('/verify_age/user/config.yaml');
     ?>
 
 1. If your config file is found elsewhere, you may change argument one above.

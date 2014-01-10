@@ -12,14 +12,25 @@ require_once '../verify_age/vendor/autoload.php';
 
 class VerifyAgeTest extends PHPUnit_Framework_TestCase {
 
+  public function testReturnPath() {
+    $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/', new VerifyAge\Storage());
+    $this->assertSame('/', $age->getConfig('return_path'));
+
+    $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/index.php', new VerifyAge\Storage());
+    $this->assertSame('/index.php', $age->getConfig('return_path'));
+
+    $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/index', new VerifyAge\Storage());
+    $this->assertSame('/index', $age->getConfig('return_path'));
+  }
+
   public function test403() {
-    $age = new VerifyAge\VerifyAge('/', '../verify_age/config_default.yaml', new VerifyAge\Storage());
+    $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/', new VerifyAge\Storage());
     $age->setConfig('document_root', '../');
     $this->assertSame('/underage.html', $age->getConfig('url_403'));
   }
 
   public function testBody() {
-    $age = new VerifyAge\VerifyAge('/', '../verify_age/config_default.yaml', new VerifyAge\Storage());
+    $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/', new VerifyAge\Storage());
     $age->setConfig('document_root', '../');
     $age->setConfig('url_403', '/underage.html');
 
@@ -76,7 +87,7 @@ EOD;
   }
 
   public function testHead() {
-    $age = new VerifyAge\VerifyAge('/', '../verify_age/config_default.yaml', new VerifyAge\Storage());
+    $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/', new VerifyAge\Storage());
     $age->setConfig('document_root', '../');
     $age->setConfig('width', 200);
     $age->setConfig('height', 200);
@@ -99,7 +110,7 @@ EOD;
   }
 
   public function testConfig() {
-    $age = new VerifyAge\VerifyAge('/', '../verify_age/config_default.yaml', new VerifyAge\Storage());
+    $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/', new VerifyAge\Storage());
     $age->setConfig('document_root', '../');
 
     $config = $age->getConfig();
@@ -116,7 +127,7 @@ EOD;
   }
   
   public function testVerify() {
-    $age = new VerifyAge\VerifyAge('/', '../verify_age/config_default.yaml', new VerifyAge\Storage());
+    $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/', new VerifyAge\Storage());
     $age->setConfig('document_root', '../');
 
     $status = $age->getStatus();
