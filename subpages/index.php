@@ -5,7 +5,7 @@ $age = new AKlump\VerifyAge\VerifyAge('../verify_age/config_default.yaml');
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+  <title>Verify Age Demo | Subfolder Page</title>
   <?php print $age->getHead(); ?>
 </head>
 <body>

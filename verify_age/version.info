@@ -1,5 +1,5 @@
 name = "Verify Age"
 description = "A PHP/Javascript solution for SEO/Google-friendly website age-verification."
 homepage = http://www.intheloftstudios.com/packages/php/verify_age
-version = 0.1.5
+version = 0.1.6
 author = Aaron Klump <sourcecode@intheloftstudios.com>
