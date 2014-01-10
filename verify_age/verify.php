@@ -10,8 +10,8 @@ require_once('vendor/autoload.php');
 $age      = new AKlump\VerifyAge\VerifyAge(__FILE__);
 $config   = $age->getConfig();
 $redirect = isset($_REQUEST['r']) ? $_REQUEST['r'] : FALSE;
-$json     = isset($_REQUEST['s']) && !$redirect;
-$op       = isset($_REQUEST['s']) ? $_REQUEST['s'] * 1 : NULL;
+$json     = (bool) !empty($_REQUEST['ajax']);
+$op       = isset($_REQUEST['o']) ? $_REQUEST['o'] * 1 : NULL;
 $response = array();
 
 if ($op) {
@@ -22,6 +22,7 @@ if ($op) {
 
     case 2:
       $age->deny();
+      $redirect = $config['url_403'];
       break;
 
     case 3:

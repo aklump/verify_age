@@ -24,8 +24,8 @@ $.fn.verifyAge = function() {
   function handleClick ($element) {
     var href = $element.attr('href');
     
-    // remove r= so we get a json response
-    href = href.replace(/&r=[^&]+/, '');
+    // add json=1 so we get a json response instead of a redirect or 403
+    href = href.replace(/\?/, '?ajax=1&');
     
     // make the ajax call and process return
     $.getJSON(href, function (data) {
