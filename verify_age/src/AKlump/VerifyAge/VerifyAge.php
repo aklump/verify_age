@@ -57,7 +57,7 @@ class VerifyAge {
 
     switch ($type) {
       case 'verify':
-        return "{$base_path}verify.php?o=1&r=$return";
+        return "{$base_path}verify.php?o=1&amp;r=$return";
       
       case 'deny':
         return "{$base_path}verify.php?o=2";
@@ -134,9 +134,9 @@ class VerifyAge {
     $base_path = $this->getConfig('base_path');
     $head = array();
     if ($this->getConfig('jquery_cdn')) {
-      $head[] = '<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>';
+      $head[] = '<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>';
     }
-    $head[] = '<script src="' . $base_path . 'scripts/verify_age.min.js"></script>';
+    $head[] = '<script type="text/javascript" src="' . $base_path . 'scripts/verify_age.min.js"></script>';
 
     
     // Generate dynamic CSS
