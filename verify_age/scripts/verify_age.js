@@ -1,5 +1,5 @@
 /*!
- * Verify Age jQuery JavaScript Plugin v0.0.6
+ * Verify Age jQuery JavaScript Plugin v0.1
  * http://www.intheloftstudios.com/packages/php/verify_age
  *
  * A PHP/Javascript solution for SEO/Google-friendly website age-verification.
@@ -7,7 +7,7 @@
  * Copyright 2013, Aaron Klump
  * Dual licensed under the MIT or GPL Version 2 licenses.
  *
- * Date: Thu, 09 Jan 2014 17:51:49 -0800
+ * Date: Thu, 09 Jan 2014 18:32:26 -0800
  */
 ;(function($, undefined) {
 "use strict";
@@ -52,7 +52,7 @@ $.fn.verifyAge = function() {
   return this;
 };
 
-$.fn.verifyAge.version = function() { return '0.0.6'; };
+$.fn.verifyAge.version = function() { return '0.1'; };
 
 })(jQuery);
 
