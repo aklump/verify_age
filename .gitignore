@@ -1,0 +1,6 @@
+.sass-cache
+*.scss
+assets
+verify_age/user/*
+verify_age/vendor
+verify_age/composer.lock

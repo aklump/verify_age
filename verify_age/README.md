@@ -1,0 +1,1 @@
+You should never modify any files inside of this folder except those in `user/`.

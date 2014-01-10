@@ -1,0 +1,23 @@
+/* line 2, verify_age.scss */
+.verify-age.background,
+.verify-age.popup {
+  position: absolute; }
+
+/* line 5, verify_age.scss */
+.verify-age.background {
+  background: #000;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0; }
+
+/* line 12, verify_age.scss */
+.verify-age.popup {
+  padding: 20px;
+  text-align: center;
+  width: 400px;
+  height: 400px;
+  background: #fff;
+  top: 50%;
+  left: 50%;
+  margin: -200px 0 0 -200px; }
