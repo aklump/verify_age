@@ -12,7 +12,7 @@
 ;(function($, undefined) {
 "use strict";
 
-$.fn.verifyAge = function(options) {
+$.fn.verifyAge = function() {
 
   var $popup      = $(this);
   var $background = $(this).siblings('.verify-age.background');

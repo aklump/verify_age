@@ -9,7 +9,8 @@
 require_once('vendor/autoload.php');
 $age = new AKlump\VerifyAge\VerifyAge('user/config.yaml', __FILE__);
 $config   = $age->getConfig();
-$redirect = isset($_REQUEST['r']) ? $_REQUEST['r'] : FALSE;
+$redirect = isset($_REQUEST['r']) ? $_REQUEST['r'] : '/';
+$json = !isset($_REQUEST['r']);
 
 if (!isset($_REQUEST['s'])) {
   $redirect = $age->getConfig('url_403');
@@ -28,7 +29,7 @@ else {
 }
 
 // Redirect for non-js browsers
-if ($redirect) {
+if (!$json) {
   header('Location:' . (string) $redirect);
 }
 

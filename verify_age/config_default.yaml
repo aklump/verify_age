@@ -30,8 +30,12 @@ snippet_enter: /verify_age/over-21.html.twig
 snippet_exit:  /verify_age/exit.html.twig
 #snippet_exit:  /verify_age/user/exit.html.twig
 
-css: /verify_age/stylesheets/verify_age.css
-width: 200
-height: 200
-background: '#000'
+# width/height in pixels of the popup container, e.g., 400
+width: 400
+height: 400
+
+# Background color of the overlay
+overlay: '#000'
+
+# Include jquery from CDN; you should DISABLE this if jquery is already present in your project.
 jquery_cdn: true

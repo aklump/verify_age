@@ -117,14 +117,26 @@ class VerifyAge {
   }
 
   public function getHead() {
+    $base_path = $this->getConfig('base_path');
     $head = array();
     if ($this->getConfig('jquery_cdn')) {
       $head[] = '<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>';
     }
-    $head[] = '<script src="/verify_age/scripts/verify_age.min.js"></script>';
-    if ($path = $this->getConfig('css')) {
-      $head[] = '<style type="text/css" media="all">@import url("' . $path . '");</style>';
-    }
+    $head[] = '<script src="' . $base_path . 'scripts/verify_age.min.js"></script>';
+
+    
+    // Generate dynamic CSS
+    $width = $this->getConfig('width');
+    $half_width = round($width / 2);
+    
+    $height = $this->getConfig('height');
+    $half_height = round($height / 2);
+
+    $overlay = $this->getConfig('overlay');
+
+    $head[] = <<<EOD
+<style type="text/css" media="all">@import url("{$base_path}stylesheets/verify_age.css");.verify-age.background{background:{$overlay};}.verify-age.popup{width:{$width}px;height:{$width}px;margin-top:-{$half_height}px;margin-left:-{$half_width}px;}</style>
+EOD;
 
     return implode(PHP_EOL, $head) . PHP_EOL;
   }
