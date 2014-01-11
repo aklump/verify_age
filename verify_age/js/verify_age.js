@@ -26,6 +26,10 @@ $.fn.verifyAge = function() {
     
     // add json=1 so we get a json response instead of a redirect or 403
     href = href.replace(/\?/, '?ajax=1&');
+
+    var $links = $element.add($element.siblings('a'));
+    $links.hide();
+    $background.find('.verify-age-ajaxing').show();
     
     // make the ajax call and process return
     $.getJSON(href, function (data) {
@@ -35,8 +39,13 @@ $.fn.verifyAge = function() {
       if (data.redirect) {
         window.location = data.redirect;
       }
+      $links.show();
     });
   }
+
+  $(document).ajaxStop(function () {
+    $('.verify-age-ajaxing').hide();
+  });
 
   $background.not('.verify-age-processed')
   .addClass('verify-age-processed')

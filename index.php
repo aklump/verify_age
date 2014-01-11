@@ -1,22 +1,7 @@
-<?php
-require_once('verify_age/vendor/autoload.php');
-$age = new AKlump\VerifyAge\VerifyAge('verify_age/config_default.yaml');
-?>
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Verify Age Demo</title>
-  <?php print $age->getHead(); ?>
-</head>
-<body>
-<h1>Age Restricted Material</h1>
+<?php include 'header.php' ?>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi dicta dolorem eligendi qui doloribus? Ipsam pariatur rerum reprehenderit hic. Voluptatum, ratione repellat repudiandae facilis porro error consequatur possimus consequuntur. Dolorum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi dicta dolorem eligendi qui doloribus? Ipsam pariatur rerum reprehenderit hic. Voluptatum, ratione repellat repudiandae facilis porro error consequatur possimus consequuntur. Dolorum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi dicta dolorem eligendi qui doloribus? Ipsam pariatur rerum reprehenderit hic. Voluptatum, ratione repellat repudiandae facilis porro error consequatur possimus consequuntur. Dolorum.</p>
+<h1>Verify Age Demo</h1>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi dicta dolorem eligendi qui doloribus? Ipsam pariatur rerum reprehenderit hic. Voluptatum, ratione repellat repudiandae facilis porro error consequatur possimus consequuntur. Dolorum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi dicta dolorem eligendi qui doloribus? Ipsam pariatur rerum reprehenderit hic. Voluptatum, ratione repellat repudiandae facilis porro error consequatur possimus consequuntur. Dolorum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi dicta dolorem eligendi qui doloribus? Ipsam pariatur rerum reprehenderit hic. Voluptatum, ratione repellat repudiandae facilis porro error consequatur possimus consequuntur. Dolorum.</p>
+<p class="jumbotron">To see how the age verfication works click on any of the links above.  <em>Home</em> does not require age verification because there is not code implemented for it, whereas <em>Not Restricted</em> is also viewable, because it has explicitly been ignored. Download the source package and study the PHP to learn more.</p>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi dicta dolorem eligendi qui doloribus? Ipsam pariatur rerum reprehenderit hic. Voluptatum, ratione repellat repudiandae facilis porro error consequatur possimus consequuntur. Dolorum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi dicta dolorem eligendi qui doloribus? Ipsam pariatur rerum reprehenderit hic. Voluptatum, ratione repellat repudiandae facilis porro error consequatur possimus consequuntur. Dolorum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi dicta dolorem eligendi qui doloribus? Ipsam pariatur rerum reprehenderit hic. Voluptatum, ratione repellat repudiandae facilis porro error consequatur possimus consequuntur. Dolorum.</p>
-
-<?php print $age->getBody(); ?>
-</body>
-</html>
+<?php include 'footer.php' ?>

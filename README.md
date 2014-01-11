@@ -62,7 +62,8 @@ Make sure to place this before and css that may override this output.  Also if y
 
 ## Just before closing `</body>` tag
 
-    <?php print $age->getBody(); ?>
+     <?php print $age->getBody(); ?>
+     ... before any closing scripts...
     </body>
 
 
