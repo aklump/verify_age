@@ -6,7 +6,7 @@ use \Symfony\Component\Yaml\Yaml;
  * Represents an age verification solution.
  */
 class VerifyAge {
-  protected $return_path, $config_dir, $config_file, $config, $storage;
+  protected $current_page, $config_dir, $config_file, $config, $storage;
 
   /**
    * Constructor
@@ -23,7 +23,7 @@ class VerifyAge {
    * @param StorageInterface $session
    *   (Optional.) The session handling object.
    */
-  public function __construct($config_file = NULL, $return_path = NULL, StorageInterface $storage = NULL) {
+  public function __construct($config_file = NULL, $current_page = NULL, StorageInterface $storage = NULL) {
     // Start the session if not already running
     if ($storage === NULL) {
       $storage = new Session();
@@ -31,7 +31,7 @@ class VerifyAge {
     $this->storage = $storage;
     $this->storage->init();
     
-    $this->return_path = $return_path;
+    $this->current_page = $current_page;
     
     // Set or remember the last config file
     $this->config_file = $config_file === NULL ? $this->storage->get('config_file') : $config_file;
@@ -50,10 +50,24 @@ class VerifyAge {
     $this->storage->set('status', 'denied');
   }
 
+  public function ignore($url) {
+    $ignores = $this->getConfig('ignores');
+    if (!is_array($url)) {
+      $url = array($url);
+    }
+    $ignores = array_merge($ignores, $url);
+    $ignores = array_unique($ignores);
+    $this->storage->set('ignores', $ignores);
+  }
+
+  public function isIgnored() {
+    return in_array($this->getConfig('current_page'), $this->getConfig('ignores'));
+  }
+
   public function getUrl($type = 'verify') {
     
     $base_path = $this->getConfig('base_path');
-    $return    = $this->getConfig('return_path');
+    $return    = $this->getConfig('current_page');
 
     switch ($type) {
       case 'verify':
@@ -112,15 +126,24 @@ class VerifyAge {
       }
 
       // Determine the return path
-      if ($this->return_path === NULL && isset($_SERVER['REQUEST_URI'])) {
+      if ($this->current_page === NULL && isset($_SERVER['REQUEST_URI'])) {
         $return = $_SERVER['REQUEST_URI'];
       }
       else {
         // This handles when __FILE__ is used to remove doc root
-        $return = str_replace(rtrim($this->config['document_root'], '/'), '', $this->return_path);
+        $return = str_replace(rtrim($this->config['document_root'], '/'), '', $this->current_page);
       }
 
-      $this->config['return_path'] = $return;
+      $this->config['current_page'] = $return;
+
+      // Default values
+      $this->config += array(
+        'ignores' => array(), 
+      );
+    }
+
+    if ($key === 'ignores') {
+      $this->config['ignores'] = array_unique(array_merge((array)$this->config['ignores'], (array)$this->storage->get('ignores')));
     }
 
     if ($key === NULL) {
@@ -131,6 +154,10 @@ class VerifyAge {
   }
 
   public function getHead() {
+    if ($this->isIgnored()) {
+      return '';
+    }
+
     $base_path = $this->getConfig('base_path');
     $head = array();
     if ($this->getConfig('jquery_cdn')) {
@@ -164,6 +191,10 @@ EOD;
    * @return [type]           [description]
    */
   public function getBody($template = NULL) {
+    if ($this->isIgnored()) {
+      return '';
+    }
+
     if ($template === NULL) {
       $status = $this->getStatus();
       $template = $status->status;

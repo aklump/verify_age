@@ -12,27 +12,59 @@ require_once '../verify_age/vendor/autoload.php';
 
 class VerifyAgeTest extends PHPUnit_Framework_TestCase {
 
+  public function testIgnores() {
+    $storage = new VerifyAge\Storage();
+    $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/', $storage);
+    $age->setConfig('document_root', '../');    
+    $age->ignore('/underage.php');
+    $age->ignore('/underage.php');
+    $age->ignore(array('/alpha.html', '/bravo.html'));
+    $this->assertCount(3, $age->getConfig('ignores'));
+
+    $this->assertFalse($age->isIgnored());
+    $this->assertNotEmpty($age->getBody());
+
+    $age = new VerifyAge\VerifyAge(NULL, '/underage.php', $storage);
+    $age->setConfig('document_root', '../');
+    $this->assertTrue($age->isIgnored());
+    $this->assertCount(3, $age->getConfig('ignores'));
+
+    $age = new VerifyAge\VerifyAge(NULL, '/alpha.html', $storage);
+    $age->setConfig('document_root', '../');
+    $this->assertTrue($age->isIgnored());
+    $this->assertCount(3, $age->getConfig('ignores'));
+
+    $age = new VerifyAge\VerifyAge(NULL, '/bravo.html', $storage);
+    $age->setConfig('document_root', '../');
+    $this->assertTrue($age->isIgnored());
+    $this->assertCount(3, $age->getConfig('ignores'));
+    $this->assertEmpty($age->getBody());
+
+    $age->setConfig('ignores', array('/charlie.html'));
+    $this->assertEquals(array('/charlie.html', '/underage.php', '/alpha.html', '/bravo.html'), $age->getConfig('ignores'));
+  }
+
   public function testReturnPath() {
     $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/', new VerifyAge\Storage());
-    $this->assertSame('/', $age->getConfig('return_path'));
+    $this->assertSame('/', $age->getConfig('current_page'));
 
     $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/index.php', new VerifyAge\Storage());
-    $this->assertSame('/index.php', $age->getConfig('return_path'));
+    $this->assertSame('/index.php', $age->getConfig('current_page'));
 
     $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/index', new VerifyAge\Storage());
-    $this->assertSame('/index', $age->getConfig('return_path'));
+    $this->assertSame('/index', $age->getConfig('current_page'));
   }
 
   public function test403() {
     $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/', new VerifyAge\Storage());
     $age->setConfig('document_root', '../');
-    $this->assertSame('/underage.html', $age->getConfig('url_403'));
+    $this->assertSame('/', $age->getConfig('url_403'));
   }
 
   public function testBody() {
     $age = new VerifyAge\VerifyAge('../verify_age/config_default.yaml', '/', new VerifyAge\Storage());
     $age->setConfig('document_root', '../');
-    $age->setConfig('url_403', '/underage.html');
+    $age->setConfig('url_403', '/underage.php');
 
     // Verify url
     $urls = array(
@@ -77,7 +109,7 @@ EOD;
     // Body exit text when verified
     $control = <<<EOD
 <div class="verify-age verified">
-  <p><a class="verify-age-exit" href="/verify_age/verify.php?o=2" rel="nofollow">I'm not 21, get me out of here.</a></p>
+  <p><a class="verify-age-exit" href="/verify_age/verify.php?o=2" rel="nofollow">I'm not yet 21, get me out of here.</a></p>
 </div>
 
 EOD;

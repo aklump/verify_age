@@ -1,0 +1,13 @@
+<div class="verify-age unverified verify-age-background">
+  <div class="alert alert-danger verify-age-dialog">
+    <div class="verify-age-inner">
+      <h1>Are you over {{ min_age }}?</h1>
+      <p class="well">For the purposes of this demo, this page has been age restricted.  Please answer the question.</p>
+      <p>
+        <a class="verify-age-exit btn btn-lg btn-default" href="{{ deny.href }}" rel="nofollow">No - Leave</a>
+        <a class="verify-age-enter btn btn-lg btn-danger" href="{{ verify.href }}" rel="nofollow">Yes - Enter</a>
+      </p>
+      <div class="verify-age-ajaxing">One moment...</div>
+    </div>
+  </div>
+</div>
