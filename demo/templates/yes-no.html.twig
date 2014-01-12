@@ -1,10 +1,13 @@
 <div class="verify-age unverified verify-age-background">
-  <div class="verify-age-dialog">
+  <div class="verify-age-dialog well well-lg">
     <div class="verify-age-inner">
       <h1>Are you over {{ min_age }}?</h1>
+      <p>This is an example of how age verification works.</p>
+      <p>Please answer the question by clicking either button.</p>
+      <p>&nbsp;</p>
       <p>
-        <a class="verify-age-exit" href="{{ deny.href }}" rel="nofollow">No - Leave</a>
-        <a class="verify-age-enter" href="{{ verify.href }}" rel="nofollow">Yes - Enter</a>
+        <a class="btn btn-lg btn-default verify-age-exit" href="{{ deny.href }}" rel="nofollow">No - Leave</a>
+        <a class="btn btn-lg btn-warning verify-age-enter" href="{{ verify.href }}" rel="nofollow">Yes - Enter</a>
       </p>
       <div class="verify-age-ajaxing">One moment...</div>
     </div>

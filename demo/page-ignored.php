@@ -1,12 +1,12 @@
 <?php
-require_once('vendor/autoload.php');
+require_once('verify_age/vendor/autoload.php');
 $age = new AKlump\VerifyAge\VerifyAge('config.yaml');
 
-// Even though we include the age verification by ignoring this file it won't
-// be protected.
-$age->ignore('/page-ignored.php');
+// Even though we instantiate age verification, by calling ignore() the path
+// to this file will not require verification.
+$age->ignore($_SERVER['REQUEST_URI']);
 ?>
-<?php include 'templates/header.php' ?>
+<?php $active_path = pathinfo(__FILE__, PATHINFO_BASENAME); include 'templates/header.php' ?>
 
 <h1>Non-Restricted Content</h1>
 

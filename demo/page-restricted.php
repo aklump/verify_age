@@ -1,11 +1,11 @@
 <?php
-require_once('vendor/autoload.php');
+require_once('verify_age/vendor/autoload.php');
 $age = new AKlump\VerifyAge\VerifyAge('config.yaml');
 
 // Another way to add an ignore, besides in the yaml config.
 $age->ignore('/');
 ?>
-<?php include 'templates/header.php' ?>
+<?php $active_path = pathinfo(__FILE__, PATHINFO_BASENAME); include 'templates/header.php' ?>
 
 <h1>Age-Restricted Content</h1>
 
