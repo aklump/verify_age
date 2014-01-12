@@ -15,14 +15,14 @@ Provides **age verification to your website** that is **SEO friendly** and allow
 * Provides [Twig][Twig] style templates for html content.
 
 # Installation
-1. **Do not install the root folder of this project** in your website, instead you need **only install the contents of `verify_age`** in the document root of your website so that `/verify_age/verify.php` is loaded correctly when you ping it in a browser.
+1. **Do not install the root folder (which is a demo) of this project** in your website, instead you need **only install the contents of `verify_age/verify_age`** in the document root of your website so that `/verify_age/verify.php` is loaded correctly when you ping it in a browser.
 1. **Never modify any files except those inside `verify_age/user/`.**
 2. Copy `verify_age/config_default.yaml` to `verify_age/user/config.yaml` and make adjustments as needed.
 1. Copy necessary snippet files into `/user/` and update `verify_age/user/config.yaml` to point to those new files.
 
 ## Composer install dependencies
 1. Install dependencies using composer.
-2. In shell, inside `verify_user/` run `composer install`.
+2. In shell, inside `verify_age/verify_age/` run `composer install`.
 
 ## Snippets
 1. The provided snippets use [Twig][Twig] style variable replacements; however we have not implemented a full [Twig][Twig] parser in this project.

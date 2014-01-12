@@ -1,6 +1,9 @@
 Options -Indexes
 
-# Hide config files
+<FilesMatch "(header|footer)\.php">
+  Order allow,deny
+</FilesMatch>
+
 <FilesMatch "\.(twig|scss|md|yaml|rb|json)$">
   Order allow,deny
 </FilesMatch>

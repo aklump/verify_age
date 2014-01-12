@@ -6,12 +6,12 @@
 # so you may enter it here
 #document_root: '/some/file/path'
 
-# The path from document root to the root of verify_age/
+# The path from document root to the dir containing verify.php
 base_path: '/verify_age/'
 
 # Enter the url (relative if within your site, or absolute if to another 
 # external website) to display when they have have not met the age requirements.
-url_403: /page-underage.php
+url_403: /
 #url_403: http://www.youtube.com/watch?v=gppbrYIcR80
 
 # Snippets will be parsed for the following variables:
@@ -21,7 +21,7 @@ url_403: /page-underage.php
 #   
 # The contents of this file will show when a user is unverified.  
 # This is the default file and should not be modified
-snippet_enter: /yes-no.html.twig
+snippet_enter: /verify_age/yes-no.html.twig
 # If you want to modify the file use this
 #snippet_enter: /verify_age/user/over-21.html.twig
 
@@ -36,7 +36,7 @@ snippet_exit:  /verify_age/exit.html.twig
 snippet_403: /verify_age/403.html.twig
 
 # Enter the minimum age necessary to enter
-min_age: 5
+min_age: 21
 
 # width/height in pixels of the popup container, e.g., 400
 width: 500
@@ -47,3 +47,7 @@ overlay: '#000'
 
 # Include jquery from CDN; you should DISABLE this if jquery is already present in your project.
 jquery_cdn: true
+
+# Global ignores; add relative urls that should never have age verification applied.
+ignores:
+  /underage.php
