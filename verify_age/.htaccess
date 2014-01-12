@@ -1,6 +1,0 @@
-Options -Indexes
-
-# Hide config files
-<FilesMatch "\.(twig|scss|md|yaml|rb|json)$">
-  Order allow,deny
-</FilesMatch>

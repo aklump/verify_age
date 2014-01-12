@@ -1,0 +1,12 @@
+base_path: /packages/php/verify_age/demo/verify_age/
+url_403: /packages/php/verify_age/demo/page-underage.php
+snippet_enter: /packages/php/verify_age/demo/templates/yes-no.html.twig
+snippet_exit:  /packages/php/verify_age/demo/verify_age/templates/exit.html.twig
+snippet_403: /packages/php/verify_age/demo/verify_age/templates/403.html.twig
+min_age: 5
+optional_css: true
+width: 500
+height: 300
+jquery_cdn: true
+ignores:
+  /packages/php/verify_age/demo/page-underage.php
