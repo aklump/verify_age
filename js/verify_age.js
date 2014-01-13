@@ -8,9 +8,9 @@
  * Dual licensed under the MIT or GPL Version 2 licenses.
  *
 <<<<<<< Updated upstream
- * Date: Mon, 13 Jan 2014 12:27:27 -0800
+ * Date: Mon, 13 Jan 2014 12:28:40 -0800
 =======
- * Date: Mon, 13 Jan 2014 12:26:15 -0800
+ * Date: Mon, 13 Jan 2014 12:28:40 -0800
 >>>>>>> Stashed changes
  */
 ;(function($, undefined) {
