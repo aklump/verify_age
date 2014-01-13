@@ -7,7 +7,11 @@
  * Copyright 2013, Aaron Klump
  * Dual licensed under the MIT or GPL Version 2 licenses.
  *
- * Date: Mon, 13 Jan 2014 12:12:49 -0800
+<<<<<<< Updated upstream
+ * Date: Mon, 13 Jan 2014 12:27:27 -0800
+=======
+ * Date: Mon, 13 Jan 2014 12:26:15 -0800
+>>>>>>> Stashed changes
  */
 ;(function($, undefined) {
 "use strict";
