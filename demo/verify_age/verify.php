@@ -53,7 +53,7 @@ if ($json) {
 
 // Redirection
 elseif ($redirect) {
-  header('Location:' . (string) $redirect);
+  header('Location:' . trim((string) $redirect, '/'));
 }
 
 // Not found

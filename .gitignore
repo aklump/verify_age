@@ -3,3 +3,5 @@
 assets
 verify_age/vendor
 verify_age/composer.lock
+vendor
+composer.lock

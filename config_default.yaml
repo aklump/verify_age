@@ -6,8 +6,14 @@
 # so you may enter it here
 #document_root: '/some/file/path'
 
+# To alter the handler script from verify.php; enter it relative to document_root
+# handler_page: /verify_age/process
+
 # The path from document root to the dir containing verify.php
 base_path: /
+
+# All relative urls below are based off of document root and should begin with
+# '/'; absolute urls of course, begin with 'http://'.
 
 # Enter the url to display when they have have not met the age requirements.
 url_403: /
@@ -42,5 +48,4 @@ jquery_cdn: true
 
 # Global ignores; add urls that should never have age verification applied.
 ignores:
-  /underage.php
-  
+- /underage.php

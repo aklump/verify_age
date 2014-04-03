@@ -1,0 +1,10 @@
+template = false
+master = "master"
+develop = "develop"
+remote = origin
+create_tags = minor
+push_tags = auto
+push_master = auto
+push_develop = auto
+patch_prefix = .
+build = ./build/

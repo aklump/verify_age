@@ -1,12 +1,47 @@
-base_path: /packages/php/verify_age/demo/verify_age/
-url_403: /packages/php/verify_age/demo/page-underage.php
-snippet_enter: /packages/php/verify_age/demo/templates/yes-no.html.twig
-snippet_exit:  /packages/php/verify_age/demo/verify_age/templates/exit.html.twig
-snippet_403: /packages/php/verify_age/demo/verify_age/templates/403.html.twig
+#
+# The configuration file for verify_age
+# 
+
+# You may need to specify the file path to the doc root of your website, if
+# so you may enter it here
+#document_root: '/some/file/path'
+
+# The path from document root to the dir containing verify.php
+base_path: /demo/verify_age
+
+# All relative urls below are based off of document root and should begin with
+# '/'; absolute urls of course, begin with 'http://'.
+
+# Enter the url to display when they have have not met the age requirements.
+url_403: /demo/page-underage.php
+
+# The URL to the the template file to show when a user is unverified.
+snippet_enter: /demo/templates/yes-no.html.twig
+
+# The URL to the the template file to show when a user is verified.
+snippet_exit:  /demo/verify_age/templates/exit.html.twig
+
+# Another URL.  This snippet will be presented when a user hits the
+# validate.php page without proper input variables.
+snippet_403: /demo/verify_age/templates/403.html.twig
+
+# Enter the minimum age necessary to enter
 min_age: 5
+
+# Include optional css with automatic sizing/position, etc? true or false
 optional_css: true
+
+# width/height in pixels of the popup container, e.g., 400
 width: 500
 height: 300
+
+# Background color of the overlay
+overlay: '#000'
+
+# Include jquery from CDN; you should set this to false if jquery is already
+# present in your project.
 jquery_cdn: true
+
+# Global ignores; add urls that should never have age verification applied.
 ignores:
-  /packages/php/verify_age/demo/page-underage.php
+- /demo/page-underage.php

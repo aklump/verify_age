@@ -1,24 +1,24 @@
-/* line 1, verify_age_optional.scss */
 .verify-age-dialog {
   top: 40%;
   left: 50%;
-  margin: 0; }
+  margin: 0;
+}
 
-/* line 6, verify_age_optional.scss */
 .verify-age-inner {
-  text-align: center; }
+  text-align: center;
+}
 
-/* line 9, verify_age_optional.scss */
 .verify-age-inner p {
   margin-top: 1.1em;
-  margin-bottom: 1.1em; }
+  margin-bottom: 1.1em;
+}
 
-/* line 14, verify_age_optional.scss */
 .verify-age-enter,
 .verify-age-exit {
   display: inline;
-  margin-right: 20px; }
+  margin-right: 20px;
+}
 
-/* line 18, verify_age_optional.scss */
 .verify-age.verified {
-  text-align: center; }
+  text-align: center;
+}
