@@ -224,7 +224,7 @@ class VerifyAge {
 
     $overlay = $this->getConfig('overlay');
 
-    $css = ".verify-age-background{background-color:{$overlay};}.verify-age-dialog{width:{$width}px;height:{$height}px;margin-top:-{$half_height}px;margin-left:-{$half_width}px;}";
+    $css = ".verify-age-background{background-color:{$overlay};}.verify-age-dialog{width:{$width}px;height:{$height}px;margin-left:-{$half_width}px;}";
 
     return $css;
   }
