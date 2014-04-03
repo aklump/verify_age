@@ -31,6 +31,15 @@ Provides **age verification to your website** that is **SEO friendly** and allow
 ## Optional CSS
 1. Include the optional css for positionin and colors for a base to work from.
 
+## CSS Troubleshooting
+1. If the overlay is not covering the entire page content try adding:
+
+        body {
+          position: relative;
+        }
+
+2. Also make sure that the getBody() output is a direct DOM child of `<body>`.
+
 ## Composer install dependencies
 1. Install dependencies using composer.
 2. `composer install --no-dev` from inside this directory, in shell.
@@ -71,6 +80,25 @@ Make sure to place this before and css that may override this output.  Also if y
      <?php print $age->getBody(); ?>
      ... before any closing scripts...
     </body>
+
+## Javascript hooks
+You can register one or more hooks like this; they will called when ajax is returned
+
+        /**
+         * Register a callback for processing our body class
+         *
+         * @param  {object} data
+         */
+        $.fn.verifyAge.callback['body_class'] = function(data) {
+          $('body').removeClass('verify-age-verified, verify-age-unverified');
+          if (data.verified) {
+            $('body').addClass('verify-age-verified');
+          }
+          else {
+            $('body').addClass('verify-age-unverified');
+          }
+        }
+
 
 # QA
 ## Check Implementation
