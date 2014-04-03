@@ -28,6 +28,9 @@ Provides **age verification to your website** that is **SEO friendly** and allow
 1. Copy `config_default.yaml` somewhere outside of this directory as `config.yaml` and make adjustments as needed.
 1. If you are going to override the included snippets, copy those files somewhere outside of this directory and update `config.yaml`.
 
+## Optional CSS
+1. Include the optional css for positionin and colors for a base to work from.
+
 ## Composer install dependencies
 1. Install dependencies using composer.
 2. `composer install --no-dev` from inside this directory, in shell.
@@ -71,9 +74,17 @@ Make sure to place this before and css that may override this output.  Also if y
 
 # QA
 ## Check Implementation
-1. Point your website to `/verify.php?s=3`; if everything is working you should see some JSON like the following, however values will change based on the session variables.
+1. Point your website to `/verify.php?ajax=1&o=3`; if everything is working you should see some JSON like the following, however values will change based on the session variables.
 
         {"mode":"inquiry","verified":false,"status":"denied","redirect":"\/"}
+
+Using this table you can manually set the status and inquire if it's working.
+
+| Action | Path |
+|----------|----------|
+| Verify Age | /verify.php?ajax=1&o=1 |
+| Deny Age | /verify.php?ajax=1&o=2 |
+| Status Inquiry | /verify.php?ajax=1&o=3 |
 
 ## Automated Tests
 1. PHPUnit tests are provided in `tests`.

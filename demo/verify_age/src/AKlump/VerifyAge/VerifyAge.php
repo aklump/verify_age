@@ -69,12 +69,18 @@ class VerifyAge {
     $base_path = $this->getConfig('base_path');
     $return    = $this->getConfig('current_page');
 
+    // Determine the handler_page
+    $handler   = $this->getConfig('handler_page');
+    if (!$handler) {
+      $handler = $this->config['base_path'] . 'verify.php';
+    }    
+
     switch ($type) {
       case 'verify':
-        return "{$base_path}verify.php?o=1&amp;r=$return";
+        return "{$handler}?o=1&amp;r=$return";
       
       case 'deny':
-        return "{$base_path}verify.php?o=2";
+        return "{$handler}?o=2";
     }
   }
 
@@ -106,7 +112,7 @@ class VerifyAge {
     if (strpos($path, $root)) {
       $path = substr($path, 0, strlen($root));
     }
-    $path = $root . trim($path, '/');
+    $path = rtrim($root, '/') . '/' . trim($path, '/');
 
     return trim(file_get_contents($path)) . PHP_EOL;
   }
@@ -164,29 +170,76 @@ class VerifyAge {
 
     $base_path = $this->getConfig('base_path');
     $head = array();
-    if ($this->getConfig('jquery_cdn')) {
-      $head[] = '<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>';
+    foreach ($this->getJavascripts() as $src) {
+      $head[] = '<script type="text/javascript" src="' . $src . '"></script>';
     }
-    $head[] = '<script type="text/javascript" src="' . $base_path . 'js/verify_age.min.js"></script>';
 
-    $head[] = '<style type="text/css" media="all">@import url("' . $base_path . 'css/verify_age.css")</style>';
+    $stylesheets  = $this->getStylesheets();
+    $css          = $this->getDynamicCss();
 
-    if ($this->getConfig('optional_css')) {
-      // Generate dynamic CSS
-      $width = $this->getConfig('width');
-      $half_width = round($width / 2);
-      
-      $height = $this->getConfig('height');
-      $half_height = round($height / 2);
-
-      $overlay = $this->getConfig('overlay');
-
-      $head[] = <<<EOD
-<style type="text/css" media="all">@import url("{$base_path}css/verify_age_optional.css");.verify-age-background{background-color:{$overlay};}.verify-age-dialog{width:{$width}px;height:{$height}px;margin-top:-{$half_height}px;margin-left:-{$half_width}px;}</style>
-EOD;
+    if ($stylesheets || $css) {
+      $style_lines = array();
+      foreach ($stylesheets as $url) {
+        $style_lines[] = '@import url("' . $url . '")';
+      }
+      if ($css) {
+        $style_lines[] = $css;
+      }
+      $head[] = '<style type="text/css" media="all">' . implode(';', $style_lines) . '</style>';
     }
   
     return implode(PHP_EOL, $head) . PHP_EOL;
+  }
+
+  /**
+   * Return an array of stylesheets to add to the head
+   *
+   * @return array
+   */
+  public function getStylesheets() {
+    $styles = array();
+    $styles[] = $this->getConfig('base_path') . 'css/verify_age.css';
+    if ($this->getConfig('optional_css')) {
+      $styles[] = $this->getConfig('base_path') . 'css/verify_age_optional.css';
+    }
+
+    return $styles;
+  }
+
+  /**
+   * Return the dynamic css
+   *
+   * @return string
+   */
+  public function getDynamicCss() {
+    if (!$this->getConfig('optional_css')) {
+      return '';
+    }
+
+    $width = $this->getConfig('width');
+    $half_width = round($width / 2);
+    
+    $height = $this->getConfig('height');
+    $half_height = round($height / 2);
+
+    $overlay = $this->getConfig('overlay');
+
+    $css = ".verify-age-background{background-color:{$overlay};}.verify-age-dialog{width:{$width}px;height:{$height}px;margin-top:-{$half_height}px;margin-left:-{$half_width}px;}";
+
+    return $css;
+  }
+
+  /**
+   * Return and array of javascript files to include on each page
+   *
+   * @return array
+   */
+  public function getJavascripts() {
+    if ($this->getConfig('jquery_cdn')) {
+      $scripts[] = '//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js';
+    }
+    $scripts[] = $this->getConfig('base_path') . 'js/verify_age.min.js';
+    return $scripts;
   }
 
   /**

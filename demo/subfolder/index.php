@@ -1,5 +1,5 @@
 <?php
-require_once('../verify_age/vendor/autoload.php');
+require_once dirname(__FILE__) . '/../verify_age/vendor/autoload.php';
 $age = new AKlump\VerifyAge\VerifyAge('../config.yaml');
 $base_path = '../';
 ?>

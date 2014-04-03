@@ -157,17 +157,23 @@ EOD;
     $control = array(
       '<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>',
       '<script type="text/javascript" src="/js/verify_age.min.js"></script>',
-      '<style type="text/css" media="all">@import url("/css/verify_age.css")</style>',
-      '<style type="text/css" media="all">@import url("/css/verify_age_optional.css");.verify-age-background{background-color:#000;}.verify-age-dialog{width:200px;height:200px;margin-top:-100px;margin-left:-100px;}</style>',
+      '<style type="text/css" media="all">@import url("/css/verify_age.css");@import url("/css/verify_age_optional.css");.verify-age-background{background-color:#000;}.verify-age-dialog{width:200px;height:200px;margin-top:-100px;margin-left:-100px;}</style>',
     );
     $this->assertEquals(implode(PHP_EOL, $control) . PHP_EOL, $age->getHead());
 
+    $control = array(
+      '<script type="text/javascript" src="/js/verify_age.min.js"></script>',
+      '<style type="text/css" media="all">@import url("/css/verify_age.css");@import url("/css/verify_age_optional.css");.verify-age-background{background-color:#000;}.verify-age-dialog{width:200px;height:200px;margin-top:-100px;margin-left:-100px;}</style>',
+    );
     $age->setConfig('jquery_cdn', FALSE);
-    unset($control[0]);
     $this->assertEquals(implode(PHP_EOL, $control) . PHP_EOL, $age->getHead());
 
+    $control = array(
+      '<script type="text/javascript" src="/js/verify_age.min.js"></script>',
+      '<style type="text/css" media="all">@import url("/css/verify_age.css")</style>',
+    );
     $age->setConfig('optional_css', FALSE);
-    unset($control[3]);
+
     $this->assertEquals(implode(PHP_EOL, $control) . PHP_EOL, $age->getHead());
 
   }

@@ -1,13 +1,12 @@
-/* line 1, verify_age.scss */
 .verify-age-ajaxing {
-  display: none; }
+  display: none;
+}
 
-/* line 5, verify_age.scss */
 .verify-age-background,
 .verify-age-dialog {
-  position: absolute; }
+  position: absolute;
+}
 
-/* line 8, verify_age.scss */
 .verify-age-background {
   z-index: 10000;
   height: 100%;
@@ -15,4 +14,5 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0; }
+  bottom: 0;
+}
