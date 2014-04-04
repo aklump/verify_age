@@ -66,7 +66,6 @@ class VerifyAge {
 
   public function getUrl($type = 'verify') {
     
-    $base_path = $this->getConfig('base_path');
     $return    = $this->getConfig('current_page');
 
     // Determine the handler_page
@@ -168,7 +167,6 @@ class VerifyAge {
       return '';
     }
 
-    $base_path = $this->getConfig('base_path');
     $head = array();
     foreach ($this->getJavascripts() as $src) {
       $head[] = '<script type="text/javascript" src="' . $src . '"></script>';
@@ -198,9 +196,9 @@ class VerifyAge {
    */
   public function getStylesheets() {
     $styles = array();
-    $styles[] = $this->getConfig('base_path') . 'css/verify_age.css';
+    $styles[] = rtrim($this->getConfig('base_path'), '/') . '/css/verify_age.css';
     if ($this->getConfig('optional_css')) {
-      $styles[] = $this->getConfig('base_path') . 'css/verify_age_optional.css';
+      $styles[] = rtrim($this->getConfig('base_path'), '/') . '/css/verify_age_optional.css';
     }
 
     return $styles;
@@ -238,7 +236,7 @@ class VerifyAge {
     if ($this->getConfig('jquery_cdn')) {
       $scripts[] = '//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js';
     }
-    $scripts[] = $this->getConfig('base_path') . 'js/verify_age.min.js';
+    $scripts[] = rtrim($this->getConfig('base_path'), '/') . '/js/verify_age.min.js';
     return $scripts;
   }
 

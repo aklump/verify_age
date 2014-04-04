@@ -1,8 +1,0 @@
-.sass-cache
-*.scss
-assets
-verify_age/vendor
-verify_age/composer.lock
-vendor
-composer.lock
-demo/verify_age/js/verify_age.min.min.js
