@@ -7,7 +7,7 @@
  * Copyright 2013, Aaron Klump
  * Dual licensed under the MIT or GPL Version 2 licenses.
  *
- * Date: Thu, 03 Apr 2014 16:39:03 -0700
+ * Date: Thu, 03 Apr 2014 18:38:23 -0700
  */
 ;(function($, undefined) {
 "use strict";
@@ -38,8 +38,8 @@ $.fn.verifyAge = function() {
       if (typeof $.fn.verifyAge.callback !== 'undefined') {
         for (var key in $.fn.verifyAge.callback) {
           $.fn.verifyAge.callback[key](data);
-        };
-      };
+        }
+      }
 
       if (data.replaceWith) {
         $background.replaceWith(data.replaceWith);
