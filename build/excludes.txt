@@ -1,0 +1,12 @@
+/.DS_Store
+.git
+.gitignore
+/.web_package
+/build
+/config_default.yaml
+/config.rb
+/demo
+/README*
+/tests
+/*.info
+/js/*
