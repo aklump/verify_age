@@ -4,6 +4,7 @@
 /.web_package
 /build
 /config_default.yaml
+/config.yaml
 /config.rb
 /demo
 /README*
