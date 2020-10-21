@@ -6,9 +6,7 @@ html, body {
 .verify-age-ajaxing {
   display: none;
 }
-.li {
-  display: none;
-}
+
 .verify-age-background,
 .verify-age-dialog {
   position: absolute;
